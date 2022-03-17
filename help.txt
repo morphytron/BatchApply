@@ -1,0 +1,31 @@
+The syntax for BatchApply works like this:
+batchapply <startingpath> <template> <file_extension> <filename_constraint_as_regex> <max_threads> <template_replacement_1> <template_replacement_2> ...
+The possible argument flags for this program are the following, and ignore descriptive text in parenthesis:
+    -templ <CLI template> (This is required for this software.  It accepts JJJ, NNN, XXX, and RRR.
+    -dirX <folder_path> (This is the starting path)
+    -dirY <folder_path> (This is the path of files you are doing filename matching with)
+    -Xex <filename_extension> (Root directory X filename-extension requirement.)
+    -Yex <filename_exension> (Root directory Y filename-extension requirement.)
+    -flags <single-character-sorting-operation-or-other>[] (Used for sorting the templates before acting on files: useful for when the files that are created or modified are dependent on the other.  Also could be used for other purposes... It's read from left to right as an array of characters.),
+        'c' : sorts files by creation time in descending order.
+        'C' : sorts files by creation time in ascending order.
+        'm' : sorts files by last modified time in descending order.
+        'M' : sorts files by last modified time in ascending order.
+        's' : sorts files by filename in descending order.
+        'S' : sorts files by filename in ascending order.
+    -Tc <int number> (The number of threads that can be running at the same time.  A minimum of two should be this value.)
+    -Xcons <reg expression> (Regex constraint for the name of the generated files from root directory X.)
+    -Ycons <reg expression> (Regex constraint for the name of the generated files from root directory Y.)
+    -tR <string> (A value that replaces the XXX in all future templates.)
+    -h/-H  (Prints this, or the help.txt file)
+    -m <mode_string> (Only use this if you don't want to use CLI
+        'interactive' : follow the prompt for more advanced features.
+        'GUI' : use the GUI for beginners--not yet implemented.
+Please note that the file_extension parameter refers to the files being scanned and placed in the ZZZ token, not the NNN.
+You can add as many template replacement variables as you like, but, you must have an equal amount of XXX tokens in the template.
+You can add RRR, XXX, NNN, or ZZZ tokens to your template.  The JJJ is for the filename of a file generated @ root directory X; the NNN is the filename of the file that this script must match to the ZZZ token; the ZZZ is the file path of the file that this script found; the XXX is a template replacement token that your C.L.I. can help you with determining for larger jobs; the RRR token is useful for generating new filenames using random numbers joined to the ends of those files.
+E.G. this will copy all files with their filenames for each file in the first argument's directory to d:/backup/<filename><customtoken> as long as the filename has the letter "a."
+batchapply "c:/users/username" 'xcopy ZZZ "d:/backup/ZZZXXX"' "a?" 2 "_backup_4-24-2018"
+This specific syntax works only in Powershell, because of the single quotations marks that enable you to write in double quotation marks for the template.
+The syntax can be a bit different for the first argument, but the rest remains the same: instead of the starting path, type "interactive."
+This will allow you to use some pattern matching that can be necessary at times.
